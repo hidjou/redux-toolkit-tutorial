@@ -1,18 +1,42 @@
+import { useEffect, useState } from 'react'
 import { DeleteIcon, PhoneIcon, UserIcon } from '../assets/icons'
+import { useDispatch, useSelector } from 'react-redux'
 
-export default function ContactList({ contacts, loading, setContacts }) {
-  const deleteContact = async (id) => {
+import { setContacts, deleteContact } from '../store/contactSlice'
+
+export default function ContactList() {
+  const dispatch = useDispatch()
+  const [loading, setLoading] = useState(false)
+
+  const contacts = useSelector((state) => state.contacts.contacts)
+
+  const removeContact = async (id) => {
     if (!window.confirm('Are you sure?')) return
     try {
       await fetch(`http://localhost:5000/contacts/${id}`, {
         method: 'DELETE',
       })
 
-      setContacts(contacts.filter((c) => c.id !== id))
+      dispatch(deleteContact(id))
     } catch (err) {
       console.log(err)
     }
   }
+
+  const fetchContacts = async () => {
+    setLoading(true)
+    try {
+      const res = await fetch('http://localhost:5000/contacts')
+      const data = await res.json()
+      dispatch(setContacts(data))
+    } catch (err) {
+      console.log(err)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => fetchContacts(), [])
 
   return (
     <div className="contacts-wrapper">
@@ -27,7 +51,7 @@ export default function ContactList({ contacts, loading, setContacts }) {
             <div className="relative w-full p-2">
               <button
                 className="delete-button"
-                onClick={() => deleteContact(contact.id)}
+                onClick={() => removeContact(contact.id)}
               >
                 <DeleteIcon />
               </button>

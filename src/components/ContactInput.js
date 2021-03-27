@@ -1,11 +1,16 @@
 import { useRef, useState } from 'react'
 import { LoadingSpinner } from '../assets/icons'
+import { useDispatch } from 'react-redux'
 
-export default function ContactInput({ setContacts, contacts }) {
+import { addContact } from '../store/contactSlice'
+
+export default function ContactInput() {
   const nameInputRef = useRef()
   const phoneInputRef = useRef()
 
   const [loading, setLoading] = useState(false)
+
+  const dispatch = useDispatch()
 
   const submitForm = async (event) => {
     event.preventDefault()
@@ -29,7 +34,7 @@ export default function ContactInput({ setContacts, contacts }) {
       nameInputRef.current.value = ''
       phoneInputRef.current.value = ''
 
-      setContacts([...contacts, data])
+      dispatch(addContact(data))
     } catch (err) {
       console.log(err)
     } finally {
