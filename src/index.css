@@ -1,15 +1,42 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #282c34;
-  color: white;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@layer components {
+  .page-title {
+    @apply my-6 text-3xl text-center text-gray-700;
+  }
+  .contact-form {
+    @apply mx-auto w-72;
+  }
+  .input-group {
+    @apply flex justify-center w-full my-4;
+  }
+  input.contact-input {
+    @apply px-2 py-1 placeholder-gray-400 placeholder-opacity-75 transition-shadow duration-150 border shadow-sm w-36 focus:outline-none focus:border-blue-300 hover:shadow-md focus:shadow-md;
+  }
+  .add-button {
+    @apply flex items-center justify-center w-full px-2 py-1 mx-auto my-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none disabled:opacity-50;
+  }
+  .spinner {
+    @apply mr-2 text-white animate-spin;
+  }
+  .contacts-wrapper {
+    @apply flex flex-col items-center;
+  }
+  .contact-card {
+    @apply flex items-center p-2 mb-4 transition-shadow duration-150 bg-white border rounded-lg shadow-sm w-72 hover:shadow-md;
+  }
+  .contact-image {
+    @apply border-2 border-blue-300 rounded-full w-14 h-14;
+  }
+  .name {
+    @apply font-semibold text-gray-700;
+  }
+  .phone {
+    @apply font-light text-gray-700;
+  }
+  .delete-button {
+    @apply absolute top-0 right-0 hidden text-red-600 cursor-pointer group-hover:block focus:outline-none;
+  }
 }
